@@ -24,27 +24,72 @@ def run():
         page_icon="👋",
     )
 
-    st.write("# Welcome to Streamlit! 👋")
+    # st.write("# Welcome to Streamlit! 👋")
 
-    st.sidebar.success("Select a demo above.")
+    # st.sidebar.success("Select a demo above.")
+
+    st.markdown("""
+    <script>    
+    function CopyToClipboard(id)
+    {
+        var r = document.createRange();
+        r.selectNode(document.getElementById(id));
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(r);
+        document.execCommand('copy');
+        window.getSelection().removeAllRanges();
+    }
+    </script>    
+    """, unsafe_allow_html=True)
+
+    code = '''def hello(): **👈 Select a dem
+    o from the sidebar**
+    print("Hello, Streamlit!")'''
+    st.code(code, language=None)
+
+    m = st.markdown("""
+    <style>
+    div.stButton > button:first-child {
+        background-color: rgb(204, 49, 49);
+    }
+    </style>""", unsafe_allow_html=True)
+
+    b = st.button("test")
 
     st.markdown(
         """
-        Streamlit is an open-source app framework built specifically for
+        <button onclick="CopyToClipboard('content');return false;">Copy Text</button>
+        <p id="content">Streamlit is an open-source app framework built specifically for
         Machine Learning and Data Science projects.
         **👈 Select a demo from the sidebar** to see some examples
-        of what Streamlit can do!
-        ### Want to learn more?
-        - Check out [streamlit.io](https://streamlit.io)
-        - Jump into our [documentation](https://docs.streamlit.io)
-        - Ask a question in our [community
-          forums](https://discuss.streamlit.io)
-        ### See more complex demos
-        - Use a neural net to [analyze the Udacity Self-driving Car Image
-          Dataset](https://github.com/streamlit/demo-self-driving)
-        - Explore a [New York City rideshare dataset](https://github.com/streamlit/demo-uber-nyc-pickups)
-    """
+        of what Streamlit can do!</p>
+        """
+        , unsafe_allow_html=True
     )
+
+    content_assitant = ['Hello', 'Good here. How about you?']
+    content_user = ['hi', 'how are you']
+    # chat_history = ""
+    # for i in range(len(content_assitant)):
+    #     assistant_message = f"\n {content_assitant[i]}"
+    #     user_message = f"\n {content_user[i]}"
+    #     chat_history += f"""<div class='Assistant'><img src='https://www.ABC.com/assets/img/favicons/favicon-96x96.png' width='17'><span class='disclaimer'> CGA Chat:</span><a href='#' onclick="CopyToClipboard('cgaChat_h{i}');return false;">Copy Text</a><BR><BR><p id='cgaChat_h{i}'>{assistant_message}</p></div>"""
+    #     chat_history += f"""<div class='You'>⚛️ <span class='disclaimer'>  You:</span><a href='#' onclick="CopyToClipboard('userChat_h{i}');return false;">Copy Text</a><BR><BR><P id='userChat_h{i}'>{user_message}</p></div>"""
+    # st.markdown(
+    #     chat_history
+    #     , unsafe_allow_html=True
+    # )
+
+    for i in range(len(content_assitant)):
+        assistant_message = f"\n {content_assitant[i]}"
+        user_message = f"\n {content_user[i]}"
+        chat_history = f"""<div class='Assistant'><img src='https://www.ABC.com/assets/img/favicons/favicon-96x96.png' width='17'><span class='disclaimer'> CGA Chat:</span></div>"""
+        st.markdown(chat_history, unsafe_allow_html=True)
+        st.code(assistant_message, language=None)
+        chat_history = f"""<div class='You'>⚛️ <span class='disclaimer'>  You:</span></div>"""
+        st.markdown(chat_history, unsafe_allow_html=True)
+        st.code(user_message, language=None)
+    
 
 
 if __name__ == "__main__":
